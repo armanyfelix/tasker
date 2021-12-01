@@ -8,13 +8,13 @@ import NewTask from "../components/NewTask";
 import { db } from "../firebase";
 import { collection, collectionGroup, getDocs, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import Landing from "./Landing";
+import Landing from "./landing";
 
 
 function Tasks() {
 
   const today = new Date();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [tasks, setTasks] = useState(null);
   const [taskOnList, setTaskOnList] = useState(null)
   const [Details, setDetails] = useState(-1);
@@ -39,6 +39,13 @@ function Tasks() {
   //         </div>
   //     )
   // }
+  if (status === "loading") {
+    return (
+      <div className="align-middle h-full text-center w-full mt-64">
+        <p className="m-20 text-3xl font-semibold">Loading...</p>
+      </div>
+    )
+  }
   if (!session) { return <Landing /> }
 
   return (
@@ -79,7 +86,7 @@ function Tasks() {
                 }
                 if (task.data().type === "list") {
                   (async () => { const taskOnList = await getDocs(query(collection(db, 'task', task.id, task.data().name))); })()
-                
+
                   taskOnList && taskOnList.docs.map(task => {
                     return (
                       <ListTask key={task.id}

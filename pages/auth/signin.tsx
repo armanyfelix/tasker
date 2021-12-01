@@ -1,12 +1,15 @@
-import { getProviders, signIn as signInProvider } from 'next-auth/react';
+import { signIn as signInProvider } from 'next-auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
 import ForgotPassword from './forgotPassword';
+import { getCsrfToken } from "next-auth/react"
+import { GetServerSidePropsContext } from 'next';
 
 
-function signIn() {
+function signIn({ csrfToken }) {
   const [forgotPassword, setForgotPassword] = useState(false);
   const [error, setError] = useState(null);
+  const [email, setEmail] = useState('');
 
   return (
     <div className="bg-light dark:bg-gray-600 font-mono min-h-screen max-h-screen">
@@ -22,7 +25,6 @@ function signIn() {
           <ForgotPassword forgotPassword setForgotPassword={setForgotPassword} />
         ) : (
           <>
-
             <div className="flex pt-7">
               <button onClick={() => signInProvider('google', { callbackUrl: "/" })}
                 className="formButton">
@@ -31,9 +33,13 @@ function signIn() {
               </button>
             </div>
             <p className="text-xl text-gray-400 font-bold">or</p>
-            <form className="flex flex-col text-xl space-y-4">
-              <input type="email" id="email" className="formInput" placeholder="Email" />
-              <button type="submit" className="formButton">Sign in with SAML_SSO</button>
+            <form method="post" action="/api/auth/signin/email" className="flex flex-col text-xl space-y-4">
+
+              <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+              <label>
+                <input type="email" id="email" className="formInput" placeholder="Email" />
+              </label>
+              <button type="submit" className="formButton">Sign in</button>
             </form>
             <div className="text-center text-xl space-y-3">
 
@@ -49,11 +55,12 @@ function signIn() {
   )
 }
 
-export async function getServerSideProps() {
-  const providers = await getProviders();
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const csrfToken = await getCsrfToken(context);
   return {
-    props: { providers },
+    props: { csrfToken },
   }
 }
+
 
 export default signIn;

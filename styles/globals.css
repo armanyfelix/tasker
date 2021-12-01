@@ -10,6 +10,8 @@ body::-webkit-scrollbar-thumb {
   background: #6649b8;
 }
 
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,12 +19,15 @@ body::-webkit-scrollbar-thumb {
 .tasksBtn {
   @apply flex w-full hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer rounded-xl p-2 text-center justify-evenly;
 }
+
 .navbarBtn {
   @apply hover:bg-gray-300 dark:hover:bg-gray-700 active:bg-gray-400 dark:active:bg-gray-600 md:p-2 mt-2 sm:mt-0 sm:p-1 p-0 items-center rounded-full;
 }
+
 .formButton {
-  @apply flex active:ring-4 ring-gray-700 dark:ring-gray-700 text-gray-700  dark:text-gray-200 bg-gray-300 dark:bg-gray-700 hover:brightness-90 dark:hover:bg-gray-800 items-center justify-evenly text-xl font-semibold w-full mx-auto rounded-lg p-3;
+  @apply flex active:ring-4 ring-gray-700 dark:ring-gray-700 text-gray-700 dark:text-gray-200 bg-gray-300 dark:bg-gray-700 hover:brightness-90 dark:hover:bg-gray-800 items-center justify-evenly text-xl font-semibold w-full mx-auto rounded-lg p-3;
 }
+
 .formInput {
-  @apply rounded-lg focus:ring-4 ring-0 ring-gray-700 hover:opacity-80 focus:shadow-innerDark shadow-xl p-3 w-full outline-none tracking-wide placeholder-gray-400;
+  @apply rounded-lg focus:ring-4 ring-gray-700 hover:opacity-80 focus:shadow-innerDark shadow-xl p-3 w-full outline-none tracking-wide placeholder-gray-400;
 }
